@@ -2,6 +2,7 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <complex.h>
 
 #define TRUE_FSK 1200
 #define FALSE_FSK 2200 
@@ -22,4 +23,25 @@ size_t fsk_mod(const uint8_t *input, uint8_t *output, const uint16_t length, uin
 	}
 	return sample_pos;
 }
-//todo demod with Goertzel
+
+float goertzel(uint8_t *buffer, uint16_t targ_freq, uint16_t num_samples, uint16_t sample_rate){
+	float scale_factor = num_samples / (float) 2.0;
+    int k = (0.5 + (((float) num_samples * targ_freq) / sample_rate));
+    float omega = (2.0 * M_PI * k) / (float) num_samples;
+    float sine = sin(omega);
+    float cosine = cos(omega);
+    float coeff = 2.0 * cosine;
+    float q0=0, q1=0, q2=0;
+
+    for (int i=0; i < num_samples; i++) {
+        q2 = q1;
+        q1 = q0;
+        q0 = coeff * q1 - q2 + buffer[i];
+    }
+
+    float real = (q0 - q1 * cosine) / scale_factor;
+    float imaginary = (-q1 * sine) / scale_factor;
+	complex complex_result = real + imaginary;
+
+    return creal(csqrt(cpowf(complex_result, 2 + I)));
+}

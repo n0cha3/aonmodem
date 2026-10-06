@@ -41,7 +41,6 @@ float goertzel(uint8_t *buffer, uint16_t targ_freq, uint16_t num_samples, uint16
 
     float real = (q0 - q1 * cosine) / scale_factor;
     float imaginary = (-q1 * sine) / scale_factor;
-	complex complex_result = real + imaginary;
-
-    return creal(csqrt(cpowf(complex_result, 2 + I)));
+	float complex complex_result = real + imaginary * I;
+	return cabsf(complex_result);
 }

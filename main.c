@@ -15,7 +15,22 @@ int main(void) {
 	FILE *output_file = fopen("out.pcm", "wb+");
 	fwrite(output_buffer, sizeof(uint8_t), filesize, output_file);*/
 
+
+	FILE *input = fopen("untitled.raw", "rb");
 	
+	if (!input) puts("PCM not found");
+
+	fseek(input, 0, SEEK_END);
+
+	size_t fsize = ftell(input);
+
+	fseek(input, 0, SEEK_SET);
+
+	uint8_t *input_buf = calloc(fsize, sizeof(uint8_t));
+	
+	fread(input_buf, sizeof(uint8_t), fsize, input);
+
+	printf("%f", goertzel(input_buf, 100, 200, 44100));
 
 	return EXIT_SUCCESS;
 }

@@ -35,8 +35,8 @@ float goertzel(uint8_t *buffer, uint16_t targ_freq, uint16_t num_samples, uint16
     int k = (0.5 + (((float) num_samples * targ_freq) / sample_rate));
 
     float omega = (2.0 * M_PI * k) / (float) num_samples,
-		sine = sin(omega),
-		cosine = cos(omega),
+		sine = sinf(omega),
+		cosine = cosf(omega),
 		coeff = 2.0 * cosine;
 
     float q0=0, q1=0, q2=0;

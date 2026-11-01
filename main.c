@@ -21,7 +21,7 @@ int main(void) {
 
 	uint8_t buf[44100];
 
-	generate_mf(buf, 44100, 44100, 400, 0);
+	generate_mf(buf, 44100, 44100, 960, 853);
 
 	fwrite(buf, sizeof(uint8_t), 44100, input);
 

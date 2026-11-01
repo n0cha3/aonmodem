@@ -26,7 +26,7 @@ size_t fsk_mod(const uint8_t *input, uint8_t *output, const uint16_t length, uin
 
 void generate_mf(uint8_t *output, const uint16_t out_bufsize, const uint16_t sample_rate, const uint16_t prim_freq, const uint16_t sec_freq) {
 	for (uint16_t i = 0; i < out_bufsize; i++) {
-				output[i] = 255 * (sinf(2 * M_PI * i / sample_rate * prim_freq) + sinf(2 * M_PI * i / sample_rate * sec_freq));
+		output[i] = 50 * (sinf(2 * M_PI * i / sample_rate * prim_freq) + sinf(2 * M_PI * i / sample_rate * sec_freq));
 	}
 }
 

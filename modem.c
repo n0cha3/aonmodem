@@ -24,6 +24,12 @@ size_t fsk_mod(const uint8_t *input, uint8_t *output, const uint16_t length, uin
 	return sample_pos;
 }
 
+void generate_mf(uint8_t *output, const uint16_t out_bufsize, const uint16_t sample_rate, const uint16_t prim_freq, const uint16_t sec_freq) {
+	for (uint16_t i = 0; i < out_bufsize; i++) {
+				output[i] = 255 * (sinf(2 * M_PI * i / sample_rate * prim_freq) + sinf(2 * M_PI * i / sample_rate * sec_freq));
+	}
+}
+
 float goertzel(uint8_t *buffer, uint16_t targ_freq, uint16_t num_samples, uint16_t sample_rate) {
 	float scale_factor = num_samples / (float) 2.0;
     int k = (0.5 + (((float) num_samples * targ_freq) / sample_rate));
